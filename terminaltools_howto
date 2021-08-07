@@ -1,0 +1,40 @@
+#Creating a conda environment for genome assembly
+  #Replace myenv with any other name.
+  #Add or subtract any other main packages you like to add
+conda create --name myenv mummer4 quast ragtag velvet seqtk fastp
+
+#Creating a subset of a fastq / fasta file of 10000 reads
+  # read1.fq and read2.fq are input files
+  # sub1.fq and sub2.fg are output files
+  
+seqtk sample -s100 read1.fq 10000 > sub1.fq
+seqtk sample -s100 read2.fq 10000 > sub2.fq
+
+#Creating a %10 subset of a given file (0.2 for %20 ..)
+seqtk sample -s100 readx.fq 0.1 > subx.fq
+
+#Adapter / base trimming a fastq file with fastp
+  #If adaptor is known you can add --adapter_sequence [adapter] and --adapter_sequence_r2 [adapter]
+  #To enable adapter detection for PE --detect_adapter_for_pe
+
+fastp --in1 infile1.fq --out1 outfile.fq --in2 infile2.fq --out2 outfile2.fq
+
+#running velvet on paired end short reads
+  #run velveth for hash tables
+  #Calculate k-mer count from velvet advisor -> https://dna.med.monash.edu/~torsten/velvet_advisor/ 
+  #k-mer must be odd
+  #you can run compressed version of data by using -fastq.gz instead of -fastq and read1.fq.gz and read2.fq.gz
+
+velveth Assembly_Name 35 -shortPaired -fastq -separate read1.fq read2.fq
+
+  #run velvetg to assemble
+ velvetg Assembly_Name
+  #contig.fa file has the seq
+  #stast file has the seq stats
+  
+ #Running quast
+  #quast creates a folder to write stats of that seq, open the html file to view
+  
+ quast contig.fa 
+ 
+
