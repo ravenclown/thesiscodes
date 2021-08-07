@@ -3,6 +3,9 @@
   #Add or subtract any other main packages you like to add
 conda create --name myenv mummer4 quast ragtag velvet seqtk fastp
 
+#after creation
+conda activate myenv
+
 #Creating a subset of a fastq / fasta file of 10000 reads
   # read1.fq and read2.fq are input files
   # sub1.fq and sub2.fg are output files
