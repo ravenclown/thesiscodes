@@ -1,3 +1,19 @@
+#Running mummer, nucmer and mummerplot
+nucmer -p [output_name] [query] [reference]
+nucmer -p test p1.fa reference.fa
+  
+#nucmer creates a .delta output file
+  #you need to filter the delta file
+delta-filter test.delta
+  
+  #then run mummerplot
+mummerplot -p outputname test.delta
+
+  #or you can run the delta-filter inside mummerplot
+mummerplot -p outputname -f test.delta
+  #to save as a png
+mummerplot -png -p outputname -f test.delta
+
 #Creating a conda environment for genome assembly
   #Replace myenv with any other name.
   #Add or subtract any other main packages you like to add
