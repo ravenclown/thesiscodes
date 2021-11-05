@@ -1,4 +1,4 @@
-#dependencies seqkit, seqtk, EMBOSS, sed, snapHIV,mafft
+#dependencies seqkit, seqtk, EMBOSS, sed, snapHIV, mafft
 
 for i in $(seq -w 17781);do
 mkdir temp_files
