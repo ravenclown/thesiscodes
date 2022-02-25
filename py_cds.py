@@ -23,6 +23,7 @@ def cut_region(fasta,bed,gene):
         chr=gene_loc_tab[i][0]
         start=int(gene_loc_tab[i][1])
         end=int(gene_loc_tab[i][2])
+        #print(chr,":",start,":",end)
         result=result+fasta[chr].seq[start:(end+1)]
     return(result)
 
@@ -30,9 +31,6 @@ def cut_region(fasta,bed,gene):
 fasta_list_input=sys.argv[1]
 bed_list_input=sys.argv[2]
 gene_list_input=sys.argv[3]
-
-#you need to give full path(no ~/) in each row to fasta and bed file lists,
-#for gene list, each gene name per row
 
 #read files
 with open(fasta_list_input) as file:
@@ -46,14 +44,13 @@ with open(gene_list_input) as file:
 file.close()
 
 #main
-for i in range(0,len(genes)):
-    filename = genes[i] + ".fasta"
-    file = open (filename,"a")
-    for j in range(0,len(fasta_list)) :
+file = open ("RC_Fixed.txt","a")
+for j in range(0,len(fasta_list)) :
+    header=">"+str((j+1))+"_LS_RCFixed\n"
+    file.write(header)
+    for i in range(0,len(genes)):
         with open(str(os.path.normpath(fasta_list[j]))) as handle:
             fasta_record = SeqIO.to_dict(SeqIO.parse(handle, "fasta"))
         bed_file=bed_list[j]
-        header=">"+str((j+1))+"_"+str(genes[i])+"\n"
-        file.write(header)
         file.write(str(cut_region(fasta_record,bed_file,genes[i])))
-        file.write("\n")
+    file.write("\n")    
