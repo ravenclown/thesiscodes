@@ -19,7 +19,6 @@ def cut_region(fasta,bed,gene):
     gene_loc=grep(bed,gene)
     gene_loc_tab=list(csv.reader(gene_loc, delimiter='\t'))
     result=""
-    #print(gene_loc_tab)
     for i in range (0,len(gene_loc_tab)):
         chr=gene_loc_tab[i][0]
         start=int(gene_loc_tab[i][1])
@@ -37,15 +36,12 @@ gene_list_input=sys.argv[3]
 with open(fasta_list_input) as file:
     fasta_list = file.read().splitlines()
 file.close()
-print(fasta_list)
 with open(bed_list_input) as file:
     bed_list = file.read().splitlines()
 file.close()
-print(bed_list)
 with open(gene_list_input) as file:
     genes = file.read().splitlines()
 file.close()
-print(genes)
 
 #main
 for i in range(0,len(genes)):
@@ -55,8 +51,7 @@ for i in range(0,len(genes)):
         with open(str(os.path.normpath(fasta_list[j]))) as handle:
             fasta_record = SeqIO.to_dict(SeqIO.parse(handle, "fasta"))
         bed_file=bed_list[j]
-        cut_region(fasta_record,bed_list[j],genes[i])
-        f.write(">",j,"_",genes[i])
-        f.write(cut_region(fasta_record,bed_file,genes[i]))
-        #print(">",(j+1),"_",genes[i])
-        #print(cut_region(fasta_record,bed_file,genes[i]))
+        header=">"+str((j+1))+str(genes[i])+"\n"
+        file.write(header)
+        file.write(str(cut_region(fasta_record,bed_file,genes[i])))
+        file.write("\n")
