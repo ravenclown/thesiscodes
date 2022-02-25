@@ -23,7 +23,6 @@ def cut_region(fasta,bed,gene):
         chr=gene_loc_tab[i][0]
         start=int(gene_loc_tab[i][1])
         end=int(gene_loc_tab[i][2])
-        #print(chr,":",start,":",end)
         result=result+fasta[chr].seq[start:(end+1)]
     return(result)
 
