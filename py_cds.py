@@ -32,6 +32,9 @@ fasta_list_input=sys.argv[1]
 bed_list_input=sys.argv[2]
 gene_list_input=sys.argv[3]
 
+#you need to give full path(no ~/) in each row to fasta and bed file lists,
+#for gene list, each gene name per row
+
 #read files
 with open(fasta_list_input) as file:
     fasta_list = file.read().splitlines()
@@ -51,7 +54,7 @@ for i in range(0,len(genes)):
         with open(str(os.path.normpath(fasta_list[j]))) as handle:
             fasta_record = SeqIO.to_dict(SeqIO.parse(handle, "fasta"))
         bed_file=bed_list[j]
-        header=">"+str((j+1))+str(genes[i])+"\n"
+        header=">"+str((j+1))+"_"+str(genes[i])+"\n"
         file.write(header)
         file.write(str(cut_region(fasta_record,bed_file,genes[i])))
         file.write("\n")
