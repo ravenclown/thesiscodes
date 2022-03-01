@@ -7,7 +7,7 @@ seqkit split ${i} -i
 done
 
 for i in {1..15}; do 
-find . -name "*id_${i}_*"-exec cat {} + | union -filter  > ${i}.union.fasta 
+find . -name "*id_${i}_*" -exec cat {} + | union -filter > ${i}.union.fasta 
 done
 
 cat *.union.fasta
