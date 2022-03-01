@@ -44,13 +44,14 @@ with open(gene_list_input) as file:
 file.close()
 
 #main
-file = open ("RC_Fixed.txt","a")
-for j in range(0,len(fasta_list)) :
-    header=">"+str((j+1))+"_LS_RCFixed\n"
-    file.write(header)
-    for i in range(0,len(genes)):
+for i in range(0,len(genes)):
+    filename=str(genes[i]) + ".fasta"
+    file = open (filename,"a")
+    for j in range(0,len(fasta_list)) :
         with open(str(os.path.normpath(fasta_list[j]))) as handle:
             fasta_record = SeqIO.to_dict(SeqIO.parse(handle, "fasta"))
         bed_file=bed_list[j]
+        header=">"+str((j+1))+"_"+genes[i]+"\n"
+        file.write(header)
         file.write(str(cut_region(fasta_record,bed_file,genes[i])))
-    file.write("\n")    
+        file.write("\n")
