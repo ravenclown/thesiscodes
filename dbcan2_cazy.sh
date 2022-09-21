@@ -10,6 +10,6 @@ OUTFILE=$2
 #download hmmDB and dbcan2 for cazy
 
 hmmpress dbCAN-HMMdb-V11.txt
-hmmscan --domtblout ${OUTFILE}.out.dm dbCAN-fam-HMMs.txt ${FASTA} > ${OUTFILE}.out
+hmmscan --domtblout ${OUTFILE}.out.dm dbCAN-HMMdb-V11.txt ${FASTA} > ${OUTFILE}.out
 sh ${HMMPARSER}/hmmscan-parser.sh ${OUTFILE}.out.dm > ${OUTFILE}.out.dm.ps
 cat ${OUTFILE}.out.dm.ps | awk '$5<1e-15&&$10>0.35' > ${OUTFILE}.out.dm.ps.stringent
