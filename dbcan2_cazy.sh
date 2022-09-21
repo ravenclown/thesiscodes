@@ -1,4 +1,3 @@
-#! usr/bin/bash
 #hmmscan must be installed and added to PATH
 
 HMMPARSER=/path/to/hmmscan-parser.h
