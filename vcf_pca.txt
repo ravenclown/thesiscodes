@@ -1,0 +1,22 @@
+
+### VCF Filtration
+vcftools --gzvcf vcffile.vcf.gz --minQ 10 --min-meanDP 5 --out 45sample_quality_trimmed --recode --recode-INFO-all
+vcftools --gzvcf 45sample_quality_trimmed.vcf.gz --singletons --out singletons
+vcftools --gzvcf 45sample_quality_trimmed.vcf.gz --exclude-positions singletons.singletons --recode --recode-INFO-all --out 45sample_quality_trimmed_singleton_removed
+vcftools --gzvcf 45sample_quality_trimmed_singleton_removed.recode.vcf --remove-indv sample2 --remove-indv sample6 --remove-indv sample10 --remove-indv sample15 --remove-indv sample16 --remove-indv sample20 \
+--remove-indv sample22 --remove-indv sample25 --remove-indv sample31 --remove-indv sample32 --remove-indv sample33 --remove-indv sample35 --remove-indv sample37 --remove-indv sample39 --remove-indv sample40 \
+--remove-indv sample43 --recode --recode-INFO-all --out 45sample_last_indvremoved
+### Plink PCA
+plink --vcf 45sample_last_indvremoved.recode.vcf --make-bed --chr-set 15 no-xy --allow-extra-chr
+plink --bfile plink --pca --chr-set 15 no-xy --allow-extra-chr
+
+
+### R
+library(ggplot2)
+library(ggrepel)
+pca1 <- read.table("pca45/plink.eigenvec",sep=" ",header=F)
+plot(data=pca1, V3~V4)
+ggplot(data=pca1, aes(V3,V4)) + geom_point(aes(color = pop_code),size=4) + geom_text_repel(label=pca1$V1,max.overlaps = 45,aes(color = pop_code))
+pca1$pop_code <- pop_code
+
+## pop_code is a host name file
